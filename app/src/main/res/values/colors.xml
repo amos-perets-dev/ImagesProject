@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">@color/blue  </color>
+    <color name="colorPrimaryDark">@color/blue</color>
+    <color name="colorAccent">@color/blue</color>
+    <color name="blue">#47B2E4</color>
+    <color name="white">#FFFFFF</color>
+    <color name="gray">#AAA8A8</color>
+    <color name="activity_gallery_images_search_button_background_available_color">@color/blue</color>
+    <color name="activity_gallery_images_search_button_background_unavailable_color">@color/gray</color>
+    <color name="activity_gallery_images_search_loading_images_indicator_color">@color/blue</color>
+    <color name="activity_gallery_images_search_button_text_color">@color/white</color>
+    <color name="activity_gallery_images_search_edit_text_border_color">@color/blue</color>
+    <color name="activity_gallery_images_search_edit_text_background_color">@color/white</color>
+    <color name="activity_gallery_background_color">#9CE489</color>
+</resources>

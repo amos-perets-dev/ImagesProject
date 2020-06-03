@@ -1,0 +1,14 @@
+<resources>
+    <string name="app_name">ImagesProject</string>
+    <string name="action_settings">Settings</string>
+    <string name="api_key">16831374-38667e9674456ede1d2dfb962</string>
+    <string name="activity_gallery_search_images_button_text">Search images</string>
+    <string name="activity_gallery_send_photo_button_text">Send photo</string>
+    <string name="activity_gallery_images_search_edit_text_hint_text">Search…(100 letters)</string>
+    <string name="activity_gallery_images_search_error_msg_empty_type_text">The search term must not be empty</string>
+    <string name="activity_gallery_images_search_error_msg_length_type_text">The search term must not be over 100 letters</string>
+    <string name="activity_gallery_images_search_error_msg_last_page_text">No more results</string>
+    <string name="transition_name">transition%1$d</string>
+    <string name="base_url">https://pixabay.com/api/?image_type=photo</string>
+
+</resources>

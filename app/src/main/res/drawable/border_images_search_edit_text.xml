@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<shape
+    android:shape="rectangle"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <stroke
+        android:color="@color/activity_gallery_images_search_edit_text_border_color"
+        android:width="@dimen/activity_gallery_images_search_edit_text_border_width"/>
+
+    <solid
+        android:color="#FFFFFF"/>
+
+</shape>
