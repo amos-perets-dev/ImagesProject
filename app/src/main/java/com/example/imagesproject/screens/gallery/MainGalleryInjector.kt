@@ -10,6 +10,8 @@ import com.example.imagesproject.db.repostitory.RepositoryManager
 import com.example.imagesproject.images_project.ImagesProjectApplication
 import com.example.imagesproject.models.validation.ISearchValidation
 import com.example.imagesproject.models.validation.SearchValidationImpl
+import com.example.imagesproject.network.INetworkManager
+import com.example.imagesproject.network.NetworkManager
 
 class MainGalleryInjector {
 
@@ -18,26 +20,48 @@ class MainGalleryInjector {
         fun createViewModel(activity: FragmentActivity): MainGalleryViewModel {
 
             val context = ImagesProjectApplication.create().applicationContext
-            val maxLengthSearchTerm = context.resources.getInteger(R.integer.activity_gallery_search_images_edit_text_max_length)
-            val errorMsgTextEmptyType = context.resources.getString(R.string.activity_gallery_images_search_error_msg_empty_type_text)
-            val errorMsgTextLengthType = context.resources.getString(R.string.activity_gallery_images_search_error_msg_length_type_text)
-            val errorMsgTextLastPage = context.resources.getString(R.string.activity_gallery_images_search_error_msg_last_page_text)
+            val maxLengthSearchTerm =
+                context.resources.getInteger(R.integer.activity_gallery_search_images_edit_text_max_length)
+            val errorMsgTextEmptyType =
+                context.resources.getString(R.string.activity_gallery_images_search_error_msg_empty_type_text)
+            val errorMsgTextLengthType =
+                context.resources.getString(R.string.activity_gallery_images_search_error_msg_length_type_text)
+            val errorMsgTextLastPage =
+                context.resources.getString(R.string.activity_gallery_images_search_error_msg_last_page_text)
+            val errorMsgTextNoInternetConnection =
+                context.resources.getString(R.string.activity_gallery_images_search_error_msg_no_internet_connection_text)
 
-            val searchValidation : ISearchValidation =
-                SearchValidationImpl(maxLengthSearchTerm, errorMsgTextEmptyType, errorMsgTextLengthType, errorMsgTextLastPage)
+            val searchValidation: ISearchValidation =
+                SearchValidationImpl(
+                    maxLengthSearchTerm,
+                    errorMsgTextEmptyType,
+                    errorMsgTextLengthType,
+                    errorMsgTextLastPage,
+                    errorMsgTextNoInternetConnection
+                )
 
-            val repositoryManager : IRepositoryManager = RepositoryManager.create()
+            val repositoryManager: IRepositoryManager = RepositoryManager.create()
+            val networkManager: INetworkManager = NetworkManager.create()
 
             var galleryAdapter = MainGalleryAdapter()
 
-            val viewModel = MainGalleryViewModel(searchValidation, repositoryManager, galleryAdapter, context)
+
+            val viewModel =
+                MainGalleryViewModel(
+                    searchValidation,
+                    repositoryManager,
+                    galleryAdapter,
+                    context,
+                    networkManager
+                )
 
             val viewModelFactory = createViewModelFactory(viewModel)
 
-            return ViewModelProviders.of(activity , viewModelFactory).get(MainGalleryViewModel::class.java)
+            return ViewModelProviders.of(activity, viewModelFactory)
+                .get(MainGalleryViewModel::class.java)
         }
 
-        private fun  createViewModelFactory(viewModel: Any): ViewModelProvider.Factory {
+        private fun createViewModelFactory(viewModel: Any): ViewModelProvider.Factory {
             return object : ViewModelProvider.Factory {
                 override fun <T : ViewModel?> create(modelClass: Class<T>): T {
                     return viewModel as T
@@ -46,7 +70,6 @@ class MainGalleryInjector {
         }
 
     }
-
 
 
 }

@@ -4,7 +4,8 @@ class SearchValidationImpl(
     private val maxLengthSearchTerm: Int,
     private val errorMsgTextEmptyType: String,
     private val errorMsgTextLengthType: String,
-    private val errorMsgTextLastPage: String
+    private val errorMsgTextLastPage: String,
+    private val errorMsgTextNoInternetConnection: String
 ) :
     ISearchValidation {
 
@@ -15,10 +16,11 @@ class SearchValidationImpl(
             else -> ValidationState.VALID
         }
 
-    override fun getErrorTextByState(validationState: Int): String  =
+    override fun getErrorTextByState(validationState: Int): String =
         when (validationState) {
             ValidationState.NOT_VALID_LENGTH.ordinal -> this.errorMsgTextLengthType
             ValidationState.LAST_PAGE.ordinal -> this.errorMsgTextLastPage
+            ValidationState.NO_INTERNET_CONNECTION.ordinal -> this.errorMsgTextNoInternetConnection
             else -> this.errorMsgTextEmptyType
         }
 

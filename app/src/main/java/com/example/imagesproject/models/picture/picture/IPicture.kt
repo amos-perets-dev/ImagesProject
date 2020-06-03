@@ -20,7 +20,7 @@ interface IPicture {
      *
      * @return [ImageSizeData]
      */
-    fun getImageSize() : ImageSizeData
+    fun getImageSize(): ImageSizeData
 
     /**
      * Get the default image

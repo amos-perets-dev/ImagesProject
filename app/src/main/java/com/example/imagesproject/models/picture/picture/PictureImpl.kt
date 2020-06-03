@@ -36,7 +36,7 @@ class PictureImpl(
 
         if (this.imageNotifier.value != null) this.imageNotifier.hide()
 
-        return Observable.create {emitter ->
+        return Observable.create { emitter ->
             this.glide
                 .addListener(object : RequestListener<Drawable> {
                     override fun onLoadFailed(
@@ -66,6 +66,7 @@ class PictureImpl(
 
     override fun getImageSize(): ImageSizeData = this.sizeImage
 
-    override fun getDefaultImage(): Drawable  = context.resources.getDrawable(R.drawable.ic_picture_icon)
+    override fun getDefaultImage(): Drawable =
+        context.resources.getDrawable(R.drawable.ic_picture_icon)
 
 }

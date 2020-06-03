@@ -59,24 +59,30 @@ class MainGalleryActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main_gallery)
         overridePendingTransition(R.anim.activity_fade_in, R.anim.activity_fade_out)
 
-        INDICATOR_ANIMATE_DURATION = resources.getInteger(R.integer.activity_gallery_search_images_loading_images_indicator_animate_duration).toLong()
+        INDICATOR_ANIMATE_DURATION =
+            resources.getInteger(R.integer.activity_gallery_search_images_loading_images_indicator_animate_duration)
+                .toLong()
 
         this.compositeDisposable.addAll(
             this.mainGalleryViewModel.getLastSearch()
-                .doOnEvent { lastSearch, t2 -> search_images_edit_text.setText(lastSearch)}
-                .subscribe { lastSearch, t2 -> this.mainGalleryViewModel.setDefaultSearchTerm(lastSearch) },
+                .doOnEvent { lastSearch, t2 -> search_images_edit_text.setText(lastSearch) }
+                .subscribe { lastSearch, t2 ->
+                    this.mainGalleryViewModel.setDefaultSearchTerm(
+                        lastSearch
+                    )
+                },
 
             RxView.globalLayouts(recyclerViewPictures)
                 .firstOrError()
-                .subscribe (this:: initRecyclerView, Throwable::printStackTrace),
+                .subscribe(this::initRecyclerView, Throwable::printStackTrace),
 
             RxRecyclerView
                 .scrollStateChanges(this.recyclerViewPictures)
-                .map{newState ->
+                .map { newState ->
                     (!this.recyclerViewPictures.canScrollVertically(RecyclerView.FOCUS_DOWN) && newState == RecyclerView.SCROLL_STATE_IDLE)
                 }
                 .filter(Functions.equalsWith(true))
-                .subscribe(Functions.actionConsumer( mainGalleryViewModel::endScroll)),
+                .subscribe(Functions.actionConsumer(mainGalleryViewModel::endScroll)),
 
             this.mainGalleryViewModel
                 .isNeedShowErrorMsg(this)
@@ -97,16 +103,17 @@ class MainGalleryActivity : AppCompatActivity() {
             this.mainGalleryViewModel
                 .getIntent(this)
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe{startActivity(it.first, it.second!!.toBundle())}
+                .subscribe { startActivity(it.first, it.second!!.toBundle()) }
         )
     }
 
     /**
      * Init the recycler view
      */
-    private fun initRecyclerView(ignored : Any) {
+    private fun initRecyclerView(ignored: Any) {
         this.recyclerViewPictures.adapter = this.mainGalleryViewModel.getAdapter()
-        this.recyclerViewPictures.layoutManager = StaggeredGridLayoutManager(4, StaggeredGridLayoutManager.VERTICAL)
+        this.recyclerViewPictures.layoutManager =
+            StaggeredGridLayoutManager(4, StaggeredGridLayoutManager.VERTICAL)
     }
 
     private fun changeStateByLoading(isLoadImages: Boolean) {
@@ -145,7 +152,7 @@ class MainGalleryActivity : AppCompatActivity() {
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         if (requestCode == OPEN_GALLERY_REQUEST) {
             if (resultCode == Activity.RESULT_OK) {
-                startActivity( this.mainGalleryViewModel.setDataFromGallery(data!!.data))
+                startActivity(this.mainGalleryViewModel.setDataFromGallery(data!!.data))
             }
         }
     }

@@ -16,28 +16,32 @@ import io.reactivex.subjects.BehaviorSubject
 
 class RepositoryManagerInjector {
 
-    companion object{
+    companion object {
 
-        fun createRepositoryManager() : RepositoryManager {
+        fun createRepositoryManager(): RepositoryManager {
             val imagesApi = NetworkManager.create().getRetrofit()!!.create(ImagesApi::class.java)
             val context = ImagesProjectApplication.create().applicationContext
             val key = context.resources.getString(R.string.api_key)
 
             val resources = context.resources
-            val imagesPerPage = resources.getInteger(R.integer.activity_gallery_search_images_per_page_size)
-            val delayLoading = resources.getInteger(R.integer.activity_gallery_search_images_delay_loading)
-            val pictureHelper : IPictureHelper = PictureHelperImpl(DisplayUtil.getScreenSize(context))
-            val sharedPreferencesManager : ISharedPreferencesManager = SharedPreferencesManager(context)
+            val imagesPerPage =
+                resources.getInteger(R.integer.activity_gallery_search_images_per_page_size)
+            val delayLoading =
+                resources.getInteger(R.integer.activity_gallery_search_images_delay_loading)
+            val pictureHelper: IPictureHelper =
+                PictureHelperImpl(DisplayUtil.getScreenSize(context))
+            val sharedPreferencesManager: ISharedPreferencesManager =
+                SharedPreferencesManager(context)
 
-             val imagesSparse = SparseIntArray()
+            val imagesSparse = SparseIntArray()
 
-             val indexImage = 0
+            val indexImage = 0
 
-             val imagesListNotifier = BehaviorSubject.create<ImmutableList<IPicture>>()
+            val imagesListNotifier = BehaviorSubject.create<ImmutableList<IPicture>>()
 
-             val imagesListTmp = ArrayList<IPicture>()
+            val imagesListTmp = ArrayList<IPicture>()
 
-             val currentImage = -1
+            val currentImage = -1
 
             return RepositoryManager(
                 imagesApi,

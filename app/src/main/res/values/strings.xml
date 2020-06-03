@@ -8,6 +8,7 @@
     <string name="activity_gallery_images_search_error_msg_empty_type_text">The search term must not be empty</string>
     <string name="activity_gallery_images_search_error_msg_length_type_text">The search term must not be over 100 letters</string>
     <string name="activity_gallery_images_search_error_msg_last_page_text">No more results</string>
+    <string name="activity_gallery_images_search_error_msg_no_internet_connection_text">No internet connection</string>
     <string name="transition_name">transition%1$d</string>
     <string name="base_url">https://pixabay.com/api/?image_type=photo</string>
 

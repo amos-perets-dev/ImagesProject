@@ -1,7 +1,5 @@
 package com.example.imagesproject.models.validation
 
-import io.reactivex.Single
-
 interface ISearchValidation {
 
     /**
@@ -9,13 +7,13 @@ interface ISearchValidation {
      *
      * @return [ValidationState] state of the search term check
      */
-    fun isSearchValid(searchTerm : String) : ValidationState
+    fun isSearchValid(searchTerm: String): ValidationState
 
     /**
      * Get the error msg text
      *
      * @return [String] msg
      */
-    fun getErrorTextByState(validationState: Int) : String
+    fun getErrorTextByState(validationState: Int): String
 
 }

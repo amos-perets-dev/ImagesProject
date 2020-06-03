@@ -10,7 +10,7 @@ import android.graphics.drawable.Drawable
 
 class DisplayUtil {
 
-    companion object{
+    companion object {
         fun getScreenSize(context: Context) =
             context.resources.configuration.screenLayout and Configuration.SCREENLAYOUT_SIZE_MASK
 

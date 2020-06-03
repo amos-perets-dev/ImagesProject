@@ -10,6 +10,6 @@ interface ISharedPreferencesManager {
     /**
      * Add the search term to the DB
      */
-    fun addSearch(search : String)
+    fun addSearch(search: String)
 
 }

@@ -8,7 +8,7 @@ import io.reactivex.Single
 class FullScreenImagesViewModel(
     private val allImages: Single<ImmutableList<IPicture>>,
     private val currentImage: Int
-) : ViewModel(){
+) : ViewModel() {
 
     fun getAllImages() = this.allImages
 

@@ -4,7 +4,7 @@ import android.app.Application
 import android.content.Context
 import androidx.multidex.MultiDex
 
-class ImagesProjectApplication : Application(){
+class ImagesProjectApplication : Application() {
 
     override fun attachBaseContext(base: Context?) {
         super.attachBaseContext(base)

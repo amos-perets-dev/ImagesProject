@@ -31,8 +31,9 @@ class FullScreenImagesActivity : AppCompatActivity() {
             fullScreenImagesViewModel
                 .getAllImages()
                 .subscribe { imagesList, t2 ->
-                    this.imagesPagerAdapter = ImagesPagerAdapter(imagesList, resources.displayMetrics.widthPixels, this)
-                    full_images_view_pager.adapter =  this.imagesPagerAdapter
+                    this.imagesPagerAdapter =
+                        ImagesPagerAdapter(imagesList, resources.displayMetrics.widthPixels, this)
+                    full_images_view_pager.adapter = this.imagesPagerAdapter
                     full_images_view_pager.setCurrentItem(
                         fullScreenImagesViewModel.getCurrentImage(),
                         false

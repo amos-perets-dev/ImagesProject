@@ -13,16 +13,20 @@ class FullScreenImagesInjector {
 
         fun createViewModel(activity: FragmentActivity): FullScreenImagesViewModel {
 
-            val repositoryManager : IRepositoryManager = RepositoryManager.create()
+            val repositoryManager: IRepositoryManager = RepositoryManager.create()
 
-            val viewModel = FullScreenImagesViewModel(repositoryManager.getAllImages(), repositoryManager.getCurrentImage())
+            val viewModel = FullScreenImagesViewModel(
+                repositoryManager.getAllImages(),
+                repositoryManager.getCurrentImage()
+            )
 
             val viewModelFactory = createViewModelFactory(viewModel)
 
-            return ViewModelProviders.of(activity , viewModelFactory).get(FullScreenImagesViewModel::class.java)
+            return ViewModelProviders.of(activity, viewModelFactory)
+                .get(FullScreenImagesViewModel::class.java)
         }
 
-        private fun  createViewModelFactory(viewModel: Any): ViewModelProvider.Factory {
+        private fun createViewModelFactory(viewModel: Any): ViewModelProvider.Factory {
             return object : ViewModelProvider.Factory {
                 override fun <T : ViewModel?> create(modelClass: Class<T>): T {
                     return viewModel as T
@@ -31,7 +35,6 @@ class FullScreenImagesInjector {
         }
 
     }
-
 
 
 }

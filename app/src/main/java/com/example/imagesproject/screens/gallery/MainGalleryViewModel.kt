@@ -12,6 +12,7 @@ import com.example.imagesproject.db.repostitory.IRepositoryManager
 import com.example.imagesproject.models.picture.picture.IPicture
 import com.example.imagesproject.models.validation.ISearchValidation
 import com.example.imagesproject.models.validation.ValidationState
+import com.example.imagesproject.network.INetworkManager
 import com.example.imagesproject.screens.full_screen_gallery.FullScreenImagesActivity
 import com.google.common.collect.ImmutableList
 import io.reactivex.Observable
@@ -23,7 +24,8 @@ class MainGalleryViewModel(
     private val searchValidation: ISearchValidation,
     private val repositoryManager: IRepositoryManager,
     private val galleryAdapter: MainGalleryAdapter,
-    private val context: Context
+    private val context: Context,
+    private val networkAvailable: INetworkManager
 ) : ViewModel() {
 
     private val compositeDisposable = CompositeDisposable()
@@ -41,8 +43,8 @@ class MainGalleryViewModel(
     init {
         this.compositeDisposable.add(
             this.galleryAdapter
-            .getClickItem()
-            .subscribe {clickOnImage(it,this. context)}
+                .getClickItem()
+                .subscribe { clickOnImage(it, this.context) }
         )
     }
 
@@ -52,14 +54,19 @@ class MainGalleryViewModel(
      * @param [String] search term
      */
     fun clickOnSearchImagesButton(searchTerm: String) {
-        this.searchTermTmp = searchTerm
-        val validationState = searchValidation.isSearchValid(searchTerm).ordinal
-        val isValid = validationState == ValidationState.VALID.ordinal
-        if (isValid) {
-            getImagesList(searchTerm, true)
+        if (!networkAvailable.isNetworkAvailable()) {
+            notifyErrorTextByState(ValidationState.NO_INTERNET_CONNECTION.ordinal)
         } else {
-            notifyErrorTextByState(validationState)
+            this.searchTermTmp = searchTerm
+            val validationState = searchValidation.isSearchValid(searchTerm).ordinal
+            val isValid = validationState == ValidationState.VALID.ordinal
+            if (isValid) {
+                getImagesList(searchTerm, true)
+            } else {
+                notifyErrorTextByState(validationState)
+            }
         }
+
     }
 
     /**
@@ -93,7 +100,7 @@ class MainGalleryViewModel(
     /**
      * Update the list [MainGalleryAdapter]
      */
-    private fun updateList(picturesList : ImmutableList<IPicture>, isClearPrevList: Boolean) {
+    private fun updateList(picturesList: ImmutableList<IPicture>, isClearPrevList: Boolean) {
         this.galleryAdapter.updateList(picturesList, isClearPrevList)
     }
 
@@ -102,7 +109,11 @@ class MainGalleryViewModel(
      */
     fun endScroll() {
         if (this.searchTermTmp.isEmpty()) return
-        getImagesList(this.searchTermTmp, false)
+        if (!networkAvailable.isNetworkAvailable()) {
+            notifyErrorTextByState(ValidationState.NO_INTERNET_CONNECTION.ordinal)
+        } else {
+            getImagesList(this.searchTermTmp, false)
+        }
     }
 
     private fun notifyErrorTextByState(validationState: Int) {
@@ -131,7 +142,14 @@ class MainGalleryViewModel(
         context: Context
     ) {
         this.repositoryManager.setCurrentImage(pair.first!!)
-        this.intent.postValue(androidx.core.util.Pair(Intent(context, FullScreenImagesActivity::class.java), pair.second))
+        this.intent.postValue(
+            androidx.core.util.Pair(
+                Intent(
+                    context,
+                    FullScreenImagesActivity::class.java
+                ), pair.second
+            )
+        )
     }
 
     /**

@@ -33,7 +33,10 @@ class RepositoryManager(
     private val delayLoading: Long
 ) : IRepositoryManager {
 
-    override fun getAllImagesBySearchTerm(searchTerm: String, isNextPage: Boolean): Single<ImmutableList<IPicture>> {
+    override fun getAllImagesBySearchTerm(
+        searchTerm: String,
+        isNextPage: Boolean
+    ): Single<ImmutableList<IPicture>> {
         val nextPage = this.pictureHelper.getNextPage(isNextPage)
         val emptyList = FluentIterable.from(Lists.newArrayList<IPicture>()).toList()
 
@@ -44,7 +47,7 @@ class RepositoryManager(
             .doOnEvent { imagesData, t2 ->
                 // Clear the  prev state
                 // And calculate the total pages
-                if(!isNextPage){
+                if (!isNextPage) {
                     this.indexImage = 0
                     this.imagesListTmp.clear()
                     this.pictureHelper.calculatePages(imagesData.total, imagesData.totalHits)
@@ -52,7 +55,7 @@ class RepositoryManager(
             }
             .map(ImagesListData::hits)
             .map(this::createPicturesList)
-            .onErrorReturnItem( emptyList )
+            .onErrorReturnItem(emptyList)
             .doOnEvent { imagesList, t2 ->
                 this.imagesListTmp.addAll(imagesList)
                 this.imagesListNotifier.onNext(FluentIterable.from(this.imagesListTmp).toList())
@@ -73,14 +76,14 @@ class RepositoryManager(
 
     override fun getLastSearchTerm(): String = this.sharedPreferencesManager.getLastSearch()
 
-    override fun addSearch(search : String) = this.sharedPreferencesManager.addSearch(search)
+    override fun addSearch(search: String) = this.sharedPreferencesManager.addSearch(search)
 
     /**
      * Create pictures list [ImmutableList[IPicture]]
      *
      * @return [ImmutableList[IPicture]]
      */
-    private fun createPicturesList(imagesListData: List<ImageData>): ImmutableList<IPicture>  =
+    private fun createPicturesList(imagesListData: List<ImageData>): ImmutableList<IPicture> =
         FluentIterable.from(imagesListData)
             .transform {
                 val imageData = it!!

@@ -42,7 +42,7 @@ class ImagesPagerAdapter(
             model.getImage()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .map{drawable -> changeItemSize(picture, model.getImageSize(), drawable) }
+                .map { drawable -> changeItemSize(picture, model.getImageSize(), drawable) }
                 .doOnNext(picture::setImageDrawable)
                 .subscribe { setStartPostTransition(picture) }
         )
@@ -50,8 +50,6 @@ class ImagesPagerAdapter(
         container.addView(view)
         return view
     }
-
-
 
     private fun setStartPostTransition(sharedView: View) {
         sharedView.viewTreeObserver.addOnPreDrawListener(object :
@@ -71,7 +69,7 @@ class ImagesPagerAdapter(
         view: View,
         imageSize: ImageSizeData,
         drawable: Drawable
-    ) : Drawable{
+    ): Drawable {
 
         val imageWidth = imageSize.width
         val imageHeight = imageSize.height
