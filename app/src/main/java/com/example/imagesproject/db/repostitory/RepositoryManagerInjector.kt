@@ -22,7 +22,10 @@ class RepositoryManagerInjector {
             val imagesApi = NetworkManager.create().getRetrofit()!!.create(ImagesApi::class.java)
             val context = ImagesProjectApplication.create().applicationContext
             val key = context.resources.getString(R.string.api_key)
-            val imagesPerPage = context.resources.getInteger(R.integer.activity_gallery_search_images_per_page_size)
+
+            val resources = context.resources
+            val imagesPerPage = resources.getInteger(R.integer.activity_gallery_search_images_per_page_size)
+            val delayLoading = resources.getInteger(R.integer.activity_gallery_search_images_delay_loading)
             val pictureHelper : IPictureHelper = PictureHelperImpl(DisplayUtil.getScreenSize(context))
             val sharedPreferencesManager : ISharedPreferencesManager = SharedPreferencesManager(context)
 
@@ -47,7 +50,8 @@ class RepositoryManagerInjector {
                 indexImage,
                 imagesListNotifier,
                 imagesListTmp,
-                currentImage
+                currentImage,
+                delayLoading.toLong()
             )
         }
     }

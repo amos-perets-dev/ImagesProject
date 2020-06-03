@@ -3,6 +3,7 @@
     <dimen name="activity_gallery_images_search_edit_text_border_width">2dp</dimen>
     <integer name="activity_gallery_search_images_edit_text_max_length">100</integer>
     <integer name="activity_gallery_search_images_per_page_size">40</integer>
+    <integer name="activity_gallery_search_images_delay_loading">2000</integer>
     <integer name="activity_gallery_search_images_loading_images_indicator_animate_duration">200</integer>
     <dimen name="activity_gallery_search_images_button_text_size_max">20dp</dimen>
     <dimen name="activity_gallery_search_images_button_text_size_min">18dp</dimen>

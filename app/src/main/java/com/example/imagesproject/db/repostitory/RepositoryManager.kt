@@ -29,7 +29,8 @@ class RepositoryManager(
     private var indexImage: Int,
     private val imagesListNotifier: BehaviorSubject<ImmutableList<IPicture>>,
     private val imagesListTmp: ArrayList<IPicture>,
-    private var currentImage: Int
+    private var currentImage: Int,
+    private val delayLoading: Long
 ) : IRepositoryManager {
 
     override fun getAllImagesBySearchTerm(searchTerm: String, isNextPage: Boolean): Single<ImmutableList<IPicture>> {
@@ -58,7 +59,7 @@ class RepositoryManager(
             }
             .cache()
             //Delay to Load images
-            .delay(1500, TimeUnit.MILLISECONDS, AndroidSchedulers.mainThread())
+            .delay(this.delayLoading, TimeUnit.MILLISECONDS, AndroidSchedulers.mainThread())
     }
 
     override fun getAllImages(): Single<ImmutableList<IPicture>> =
